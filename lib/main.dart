@@ -23,25 +23,12 @@ class _CircularMenuState extends State<CircularMenuApp> {
       home: Scaffold(
         body: Stack(
           children: [
-            GestureDetector(
-              onTap: (){
-                print("Clicked---");
-              },
-              child: Center(
-                child: Text('Index $_selectedIndex'),
-              ),
+            Center(
+              child: Text('Index $_selectedIndex'),
             ),
             Builder(
               builder: (context) => CircularMenuWidget(
                 key: fabKey,
-                alignment: Alignment.bottomRight,
-                ringDiameter: 650.0,
-                ringWidth: 200.0,
-                animationDuration: const Duration(milliseconds: 800),
-                onDisplayChange: (isOpen) {
-                  // _showSnackBar(
-                  //     context, "The menu is ${isOpen ? "open" : "closed"}");
-                },
                 children: <Widget>[
                   ActionButton(
                     onPressed: () => _showSnackBar(context, "Event"),
@@ -89,7 +76,11 @@ class _CircularMenuState extends State<CircularMenuApp> {
               label: 'Search',
             ),
             BottomNavigationBarItem(
-              icon: Icon(_selectedIndex == 3 ? Icons.close : Icons.add),
+              icon: Icon(_selectedIndex == 3
+                  ? fabKey.currentState!.isOpen
+                      ? Icons.add
+                      : Icons.close
+                  : Icons.add),
               label: 'More',
             ),
           ],
@@ -160,11 +151,11 @@ class ActionButton extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 5.0,
         ),
         Text(
-          '$label',
+          label,
           style: const TextStyle(color: Colors.white),
         )
       ],
