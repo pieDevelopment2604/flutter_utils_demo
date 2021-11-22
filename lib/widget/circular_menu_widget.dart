@@ -69,38 +69,38 @@ class CircularMenuWidgetState extends State<CircularMenuWidget> with SingleTicke
           color: _isOpen ? Colors.black54 : Colors.transparent,
         ),
       ),
-      // Container(
-      //   transform: Matrix4.translationValues(-16.0, -56.0, 0.0),
-      //   child: OverflowBox(
-      //     maxWidth: _ringDiameter,
-      //     maxHeight: _ringDiameter,
-      //     child: Transform(
-      //       transform: Matrix4.translationValues(
-      //         _translationX,
-      //         _translationY,
-      //         0.0,
-      //       )..scale(_scaleAnimation.value),
-      //       alignment: FractionalOffset.center,
-      //       child: SizedBox(
-      //         width: _ringDiameter,
-      //         height: _ringDiameter,
-      //         child: _scaleAnimation.value == 1.0
-      //             ? Transform.rotate(
-      //                 angle: (-2 * pi) * _rotateAnimation.value * _directionX * _directionY,
-      //                 child: Stack(
-      //                   alignment: Alignment.center,
-      //                   children: widget.children
-      //                       .asMap()
-      //                       .map((index, child) => MapEntry(index, _applyTransformations(child, index)))
-      //                       .values
-      //                       .toList(),
-      //                 ),
-      //               )
-      //             : Container(),
-      //       ),
-      //     ),
-      //   ),
-      // ),
+      Container(
+        transform: Matrix4.translationValues(-16.0, -56.0, 0.0),
+        child: OverflowBox(
+          maxWidth: _ringDiameter,
+          maxHeight: _ringDiameter,
+          child: Transform(
+            transform: Matrix4.translationValues(
+              _translationX,
+              _translationY,
+              0.0,
+            )..scale(_scaleAnimation.value),
+            alignment: FractionalOffset.center,
+            child: SizedBox(
+              width: _ringDiameter,
+              height: _ringDiameter,
+              child: _scaleAnimation.value == 1.0
+                  ? Transform.rotate(
+                      angle: (-2 * pi) * _rotateAnimation.value * _directionX * _directionY,
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: widget.children
+                            .asMap()
+                            .map((index, child) => MapEntry(index, _applyTransformations(child, index)))
+                            .values
+                            .toList(),
+                      ),
+                    )
+                  : Container(),
+            ),
+          ),
+        ),
+      ),
     ]);
   }
 
@@ -144,15 +144,13 @@ class CircularMenuWidgetState extends State<CircularMenuWidget> with SingleTicke
 
     _slideUpCurve = CurvedAnimation(parent: _animationController, curve: const Interval(0.0, 0.4));
 
-    _slideUpAnimation = Tween<Offset>(begin: Offset.zero, end: const Offset(0.0, 1.0)).animate(_animationController);
-
-    // _slideUpAnimation = Tween<Offset>(
-    //   begin: const Offset(0.0, 1.0),
-    //   end: Offset.zero,
-    // ).animate(_slideUpCurve as Animation<double>)
-    //   ..addListener(() {
-    //     setState(() {});
-    //   });
+    _slideUpAnimation = Tween<Offset>(
+      begin: const Offset(0.0, 1.0),
+      end: Offset.zero,
+    ).animate(_slideUpCurve as Animation<double>)
+      ..addListener(() {
+        setState(() {});
+      });
   }
 
   void _calculateProps() {
@@ -167,16 +165,13 @@ class CircularMenuWidgetState extends State<CircularMenuWidget> with SingleTicke
   }
 
   void open() {
-    print("Is animating ---> ${_animationController.status}");
-    _animationController.forward().then((_) {
-      _isOpen = true;
-    });
+    _isOpen = true;
+    _animationController.forward();
   }
 
   void close() {
-    _animationController.reverse().then((_) {
-      _isOpen = false;
-    });
+    _animationController.reverse();
+    _isOpen = false;
   }
 
   bool get isOpen => _isOpen;

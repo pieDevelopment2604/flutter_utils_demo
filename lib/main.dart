@@ -75,20 +75,25 @@ class _CircularMenuState extends State<CircularMenuApp> {
               icon: Icon(Icons.search),
               label: 'Search',
             ),
-            BottomNavigationBarItem(
-              icon: Icon(_selectedIndex == 3
-                  ? fabKey.currentState!.isOpen
-                      ? Icons.add
-                      : Icons.close
-                  : Icons.add),
-              label: 'More',
-            ),
+            _singleBottomNavigationItem(),
           ],
           currentIndex: _selectedIndex,
           selectedItemColor: Colors.green,
           onTap: _onItemTapped,
         ),
       ),
+    );
+  }
+
+  BottomNavigationBarItem _singleBottomNavigationItem(){
+    print("The fab value ---> ${fabKey.currentState?.isOpen}");
+    return BottomNavigationBarItem(
+      icon: Icon(_selectedIndex == 3
+          ? fabKey.currentState?.isOpen == true
+          ? Icons.close
+          : Icons.add
+          : Icons.add),
+      label: 'More',
     );
   }
 
