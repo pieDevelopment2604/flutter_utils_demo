@@ -5,18 +5,23 @@ import 'package:flutter/material.dart';
 import 'package:vector_math/vector_math.dart' as vector;
 
 class CircularMenuWidget extends StatefulWidget {
+  /// List of widgets passed as children gives the menu items.
   final List<Widget> children;
+
+  /// Gives the alignment for the menu item [Please do not change it]
   final Alignment alignment;
-  final double fabSize;
-  final EdgeInsets fabMargin;
+
+  /// Variable which gives the duration of the entire animation
+  /// Please change this duration in order to make the animation slow/fast
+  /// By default, animation speed is set to 1 second. If needs to slow, then change it to milliseconds.
   final Duration animationDuration;
+
+  /// [Curve] gives the animation curve for the circular animation.[Please do not change it]
   final Curve animationCurve;
 
   const CircularMenuWidget(
       {Key? key,
       this.alignment = Alignment.bottomRight,
-      this.fabSize = 64.0,
-      this.fabMargin = const EdgeInsets.all(16.0),
       this.animationDuration = const Duration(seconds: 1),
       this.animationCurve = Curves.easeInOutCirc,
       required this.children})
@@ -28,6 +33,7 @@ class CircularMenuWidget extends StatefulWidget {
 }
 
 class CircularMenuWidgetState extends State<CircularMenuWidget> with SingleTickerProviderStateMixin {
+  /// Group of variables which gives the position of the menu items, based on the screen size
   late double _screenWidth;
   late double _screenHeight;
   late double _directionX;
@@ -35,9 +41,11 @@ class CircularMenuWidgetState extends State<CircularMenuWidget> with SingleTicke
   late double _translationX;
   late double _translationY;
 
+  /// Group of variables which gives the diameter of the curve of the menu.
   double? _ringDiameter;
   double? _ringWidth;
 
+  /// Animations settings.
   late AnimationController _animationController;
   late Animation<Offset> _slideUpAnimation;
   late Animation _slideUpCurve;
@@ -46,6 +54,7 @@ class CircularMenuWidgetState extends State<CircularMenuWidget> with SingleTicke
   late Animation<double> _rotateAnimation;
   late Animation _rotateCurve;
 
+  /// Flag which maintains the toggle mode of the animation/menu
   bool _isOpen = false;
 
   /// [Color] variable used for the color of the background layer of circular menu
@@ -67,17 +76,14 @@ class CircularMenuWidgetState extends State<CircularMenuWidget> with SingleTicke
       _calculateProps();
     }
 
-    return Stack(children: <Widget>[
-      _backgroundLayerWidget(),
-      _circularMenuWidget()
-    ]);
+    return Stack(children: <Widget>[_backgroundLayerWidget(), _circularMenuWidget()]);
   }
 
   /// Widget function which gives the ui for the background layer of the circular menu.
   /// The background color of the widget is maintained within this widget
   /// if [_isOpen] is true, then color is shown else transparent color is taken.
   /// Color of the layer can be changed by changing the default color of [backgroundLayerColor]
-  Widget _backgroundLayerWidget(){
+  Widget _backgroundLayerWidget() {
     return SlideTransition(
       position: _slideUpAnimation,
       child: Container(
@@ -86,9 +92,10 @@ class CircularMenuWidgetState extends State<CircularMenuWidget> with SingleTicke
     );
   }
 
-  /// Widget function that enable [children] widget scale and rotate sequentially with respective animation value of [_scaleAnimation] and [_rotateAnimation].
+  /// Widget function that enable [children] widget scale and
+  /// rotate sequentially with respective animation value of [_scaleAnimation] and [_rotateAnimation].
   /// Apply transformation on each [children] widget from the list of [children] widget we have used MapEntry.
-  Widget _circularMenuWidget(){
+  Widget _circularMenuWidget() {
     return Container(
       transform: Matrix4.translationValues(-16.0, -56.0, 0.0),
       child: OverflowBox(
@@ -106,16 +113,16 @@ class CircularMenuWidgetState extends State<CircularMenuWidget> with SingleTicke
             height: _ringDiameter,
             child: _scaleAnimation.value == 1.0
                 ? Transform.rotate(
-                  angle: (-2 * pi) * _rotateAnimation.value * _directionX * _directionY,
+                    angle: (-2 * pi) * _rotateAnimation.value * _directionX * _directionY,
                     child: Stack(
-                alignment: Alignment.center,
-                children: widget.children
-                    .asMap()
-                    .map((index, child) => MapEntry(index, _applyTransformations(child, index)))
-                    .values
-                    .toList(),
-              ),
-            )
+                      alignment: Alignment.center,
+                      children: widget.children
+                          .asMap()
+                          .map((index, child) => MapEntry(index, _applyTransformations(child, index)))
+                          .values
+                          .toList(),
+                    ),
+                  )
                 : Container(),
           ),
         ),
@@ -147,8 +154,10 @@ class CircularMenuWidgetState extends State<CircularMenuWidget> with SingleTicke
     );
   }
 
-  /// This function will execute three animation [_scaleAnimation], [_rotateAnimation] and [_slideUpAnimation] simultaneously with duration of widget.animationDuration.
-  /// [_scaleAnimation] and [_rotateAnimation] animation apply for the circular menu and [_slideUpAnimation] animation apply for the background layer of container.
+  /// This function will execute three animation [_scaleAnimation], [_rotateAnimation]
+  /// and [_slideUpAnimation] simultaneously with duration of widget.animationDuration.
+  /// [_scaleAnimation] and [_rotateAnimation] animation apply for the circular menu
+  /// and [_slideUpAnimation] animation apply for the background layer of container.
   void initCircularMenuAnimations() {
     _animationController = AnimationController(duration: widget.animationDuration, vsync: this);
     _scaleCurve =
@@ -175,7 +184,9 @@ class CircularMenuWidgetState extends State<CircularMenuWidget> with SingleTicke
       });
   }
 
-  /// This function will calculate the props when there is an any change of variables
+  /// This function will calculate the props when there is an any change of variables.
+  /// Here, the translation is based on the size of the fab used originally to maintain the alignment of the
+  /// items. [64] is the base size of the fab button.
   void _calculateProps() {
     _screenWidth = MediaQuery.of(context).size.width;
     _screenHeight = MediaQuery.of(context).size.height;
@@ -183,8 +194,8 @@ class CircularMenuWidgetState extends State<CircularMenuWidget> with SingleTicke
     _ringWidth = _ringDiameter! * 0.25;
     _directionX = widget.alignment.x == 0 ? 1 : 1 * widget.alignment.x.sign;
     _directionY = widget.alignment.y == 0 ? 1 : 1 * widget.alignment.y.sign;
-    _translationX = ((_screenWidth - widget.fabSize) / 2) * widget.alignment.x;
-    _translationY = ((_screenHeight - widget.fabSize) / 2) * widget.alignment.y;
+    _translationX = ((_screenWidth - 64) / 2) * widget.alignment.x;
+    _translationY = ((_screenHeight - 64) / 2) * widget.alignment.y;
   }
 
   /// This function will perform all the animation with the reference of [_animationController].
