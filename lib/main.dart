@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:greenlync/widget/circular_menu_widget.dart';
 
@@ -13,7 +14,12 @@ class CircularMenuApp extends StatefulWidget {
 }
 
 class _CircularMenuState extends State<CircularMenuApp> {
+  /// GlobalKey for [CircularMenuWidgetState] is used for opening/closing circular menu when clicking on button click of bottomNavigationBar.
   final GlobalKey<CircularMenuWidgetState> fabKey = GlobalKey();
+
+  /// Var [_selectedIndex] is for current active item from the list of bottomNavigationBar items.
+  /// You can change the default value by changing [_selectedIndex].
+  /// By default, 0 value is selected.
   int _selectedIndex = 0;
 
   @override
@@ -85,8 +91,9 @@ class _CircularMenuState extends State<CircularMenuApp> {
     );
   }
 
+  /// Click on this item, the circular menu will open and [Icons.add] will change to [Icons.close] icon on bottomNavigationBar else otherwise.
+  /// By default, [Icons.add] will be shown when not selected
   BottomNavigationBarItem _singleBottomNavigationItem(){
-    print("The fab value ---> ${fabKey.currentState?.isOpen}");
     return BottomNavigationBarItem(
       icon: Icon(_selectedIndex == 3
           ? fabKey.currentState?.isOpen == true
@@ -97,6 +104,9 @@ class _CircularMenuState extends State<CircularMenuApp> {
     );
   }
 
+  /// This function will set the index to [_selectedIndex] for the item that we click on any item from the bottomNavigationBar items.
+  /// If we click on item[index == 3] it will open the [CircularMenuWidgetState] class.
+  /// If it is open then close the [CircularMenuWidgetState] class.
   void _onItemTapped(int index) {
     if (index == 3) {
       if (fabKey.currentState!.isOpen) {
@@ -112,6 +122,7 @@ class _CircularMenuState extends State<CircularMenuApp> {
     });
   }
 
+  /// This function displays snackBar on click of circular menu item click.
   void _showSnackBar(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(message),
@@ -120,6 +131,7 @@ class _CircularMenuState extends State<CircularMenuApp> {
   }
 }
 
+/// Created custom ActionButton class for display single circular menu item with the help of [icon] and [label].
 @immutable
 class ActionButton extends StatelessWidget {
   const ActionButton({
