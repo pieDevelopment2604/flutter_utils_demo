@@ -66,7 +66,7 @@ class CircularMenuWidgetState extends State<CircularMenuWidget> with SingleTicke
       SlideTransition(
         position: _slideUpAnimation,
         child: Container(
-          color: _isOpen ? Colors.black54 : Colors.transparent,
+          color: _isOpen ? Colors.black87 : Colors.transparent,
         ),
       ),
       Container(
