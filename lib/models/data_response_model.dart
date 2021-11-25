@@ -12,10 +12,12 @@ class DataResponseModel {
   final List<HomePageFeedsData>? data;
 
   factory DataResponseModel.fromJson(Map<String, dynamic> json) => DataResponseModel(
-        data: json["data"] == null ? [] : List<HomePageFeedsData>.from(json["data"].map((x) => HomePageFeedsData.fromJson(x))),
+        data: json["data"] == null
+            ? []
+            : List<HomePageFeedsData>.from(json["data"].map((x) => HomePageFeedsData.fromJson(x))),
       );
 
-  factory DataResponseModel.initial(){
+  factory DataResponseModel.initial() {
     return DataResponseModel(data: []);
   }
 
@@ -49,6 +51,28 @@ class HomePageFeedsData {
         commenterPic: json["commenterPic"],
         postDetails: json["postDetails"] == null ? null : PostDetails.fromJson(json["postDetails"]),
       );
+
+  factory HomePageFeedsData.initial() {
+    return HomePageFeedsData(
+      isAComment: false,
+      commentDescription: '',
+      commentedBefore: '',
+      commentedBy: '',
+      commenterPic: '',
+      postDetails: PostDetails.initial(),
+    );
+  }
+
+  factory HomePageFeedsData.initialWithComments() {
+    return HomePageFeedsData(
+      isAComment: true,
+      commentDescription: 'xxxx xxxxxx',
+      commentedBefore: 'xx minutes',
+      commentedBy: 'xxx xxxxx',
+      commenterPic: '',
+      postDetails: PostDetails.initial(),
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         "isAComment": isAComment,
@@ -86,11 +110,24 @@ class PostDetails {
         commentsCount: json["commentsCount"],
         likesCount: json["likesCount"],
         postAuthorName: json["postAuthorName"],
-        postAuthorPic: json["postAuthorPic"],
+        postAuthorPic: json["postAuthorPic"] ?? '',
         postImage: json["postImage"],
         postDescription: json["postDescription"],
         postedBefore: json["postedBefore"],
       );
+
+  factory PostDetails.initial() {
+    return PostDetails(
+      shareCount: 0,
+      commentsCount: 0,
+      likesCount: 0,
+      postAuthorName: 'xxxx xxxxx',
+      postAuthorPic: '',
+      postImage: '',
+      postDescription: 'xxxxxx xxxxxx xxxxxxxxxxxxxxxxx',
+      postedBefore: 'x minutes',
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         "shareCount": shareCount,
