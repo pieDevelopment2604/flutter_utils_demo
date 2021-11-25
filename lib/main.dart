@@ -88,220 +88,16 @@ class _CircularMenuState extends State<CircularMenuApp> {
     return StaggeredGridView.countBuilder(
       itemCount: dataResponseModel.data!.length,
       crossAxisCount: 4,
-      mainAxisSpacing: 12.0,
-      crossAxisSpacing: 12.0,
+      mainAxisSpacing: 8.0,
+      crossAxisSpacing: 8.0,
       staggeredTileBuilder: (index) => StaggeredTile.fit(2),
       itemBuilder: (context, index) {
         print(dataResponseModel.data![index].postDetails!.postAuthorName);
-        // if (isLoading) {
-        //   return buildEffect();
-        // } else {
-
         if (dataResponseModel.data![index].isAComment) {
-          return Shimmer.fromColors(
-              baseColor: Colors.grey.shade400,
-              highlightColor: Colors.grey.shade200,
-              child: _singleItemWithComments(dataResponseModel.data![index]));
+          return _singleItemWithComments(dataResponseModel.data![index]);
         }
 
-        return Shimmer.fromColors(
-            baseColor: Colors.grey.shade400,
-            highlightColor: Colors.grey.shade200,
-            child: _singleItemWithoutComments(dataResponseModel.data![index].postDetails!));
-
-        return Container(
-          padding: const EdgeInsets.all(8.0),
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(16.0)),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const CircleAvatar(radius: 12, backgroundImage: NetworkImage('https://via.placeholder.com/150')),
-                  const SizedBox(width: 8.0),
-                  Text(dataResponseModel.data![index].postDetails!.postAuthorName),
-                ],
-              ),
-              const SizedBox(height: 8.0),
-              Text(
-                dataResponseModel.data![index].commentDescription,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-              const SizedBox(height: 8.0),
-              Text(
-                dataResponseModel.data![index].commentedBefore,
-                style: const TextStyle(color: Colors.grey, fontSize: 10),
-              ),
-              // const SizedBox(
-              //   height: 4.0,
-              // ),
-              // dataResponseModel.data![index].isAComment == true
-              //     ? Expanded(
-              //         child: Column(
-              //           children: [
-              //             Expanded(
-              //               child: Row(
-              //                 children: [
-              //                   // const VerticalDivider(color: Colors.black,
-              //                   //   thickness: 2, width: 2,
-              //                   //   indent: 0,
-              //                   //   endIndent: 200,),
-              //                   const SizedBox(
-              //                     width: 2,
-              //                   ),
-              //                   Column(
-              //                     children: [
-              //                       Row(
-              //                         crossAxisAlignment: CrossAxisAlignment.center,
-              //                         children: [
-              //                           ClipOval(
-              //                             child: Image.network(
-              //                               'https://via.placeholder.com/150',
-              //                               width: 32,
-              //                               height: 32,
-              //                               fit: BoxFit.cover,
-              //                             ),
-              //                           ),
-              //                           const SizedBox(
-              //                             width: 8.0,
-              //                           ),
-              //                           Text(
-              //                             dataResponseModel.data![index].postDetails!.postAuthorName,
-              //                           )
-              //                         ],
-              //                       ),
-              //                       Container(
-              //                         padding: const EdgeInsets.all(8.0),
-              //                         decoration: BoxDecoration(
-              //                             color: Colors.white,
-              //                             borderRadius: BorderRadius.circular(20.0),
-              //                             boxShadow: [
-              //                               BoxShadow(
-              //                                   offset: Offset(0, 2),
-              //                                   blurRadius: 3,
-              //                                   color: Colors.black.withOpacity(0.23))
-              //                             ]),
-              //                         child: Column(
-              //                           children: [
-              //                             ClipRRect(
-              //                               borderRadius: BorderRadius.circular(8.0),
-              //                               child: Image.network(
-              //                                 'https://via.placeholder.com/150',
-              //                                 width: 200,
-              //                                 height: 100,
-              //                                 fit: BoxFit.cover,
-              //                               ),
-              //                             ),
-              //                             Padding(
-              //                               padding: const EdgeInsets.all(8.0),
-              //                               child: Column(
-              //                                 children: [
-              //                                   Text(
-              //                                     dataResponseModel.data![index].postDetails!.postDescription,
-              //                                   ),
-              //                                   const SizedBox(
-              //                                     width: 4.0,
-              //                                   ),
-              //                                   Text(
-              //                                     dataResponseModel.data![index].commentedBefore,
-              //                                     style: const TextStyle(color: Colors.grey),
-              //                                   )
-              //                                 ],
-              //                               ),
-              //                             )
-              //                           ],
-              //                         ),
-              //                       ),
-              //                     ],
-              //                   ),
-              //                 ],
-              //               ),
-              //             ),
-              //             Row(
-              //               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              //               children: [
-              //                 const Icon(Icons.share),
-              //                 Text(
-              //                   '${dataResponseModel.data![index].postDetails!.shareCount}',
-              //                 ),
-              //                 const Icon(Icons.message),
-              //                 Text(
-              //                   '${dataResponseModel.data![index].postDetails!.commentsCount}',
-              //                 ),
-              //                 const Icon(Icons.message),
-              //                 Text(
-              //                   '${dataResponseModel.data![index].postDetails!.likesCount}',
-              //                 )
-              //               ],
-              //             )
-              //           ],
-              //         ),
-              //       )
-              //     : Container(
-              //         // padding: const EdgeInsets.all(8.0),
-              //         decoration: BoxDecoration(
-              //             color: Colors.white,
-              //             borderRadius: BorderRadius.circular(20.0),
-              //             boxShadow: [
-              //               BoxShadow(offset: Offset(0, 2), blurRadius: 3, color: Colors.black.withOpacity(0.23))
-              //             ]),
-              //         child: Column(
-              //           children: [
-              //             ClipRRect(
-              //               borderRadius: BorderRadius.circular(8.0),
-              //               child: Image.network(
-              //                 'https://via.placeholder.com/150',
-              //                 width: 200,
-              //                 height: 100,
-              //                 fit: BoxFit.cover,
-              //               ),
-              //             ),
-              //             Padding(
-              //               padding: const EdgeInsets.all(8.0),
-              //               child: Column(
-              //                 children: [
-              //                   Text(
-              //                     dataResponseModel.data![index].postDetails!.postDescription,
-              //                   ),
-              //                   const SizedBox(
-              //                     width: 4.0,
-              //                   ),
-              //                   Text(
-              //                     dataResponseModel.data![index].commentedBefore,
-              //                     style: const TextStyle(color: Colors.grey),
-              //                   ),
-              //                   const SizedBox(
-              //                     width: 8.0,
-              //                   ),
-              //                   Row(
-              //                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              //                     children: [
-              //                       const Icon(Icons.share),
-              //                       Text(
-              //                         '${dataResponseModel.data![index].postDetails!.shareCount}',
-              //                       ),
-              //                       const Icon(Icons.message),
-              //                       Text(
-              //                         '${dataResponseModel.data![index].postDetails!.commentsCount}',
-              //                       ),
-              //                       const Icon(Icons.message),
-              //                       Text(
-              //                         '${dataResponseModel.data![index].postDetails!.likesCount}',
-              //                       )
-              //                     ],
-              //                   ),
-              //                 ],
-              //               ),
-              //             )
-              //           ],
-              //         ),
-              //       )
-            ],
-          ),
-        );
-        // }
+        return _singleItemWithoutComments(dataResponseModel.data![index].postDetails!);
       },
     );
   }
@@ -311,7 +107,7 @@ class _CircularMenuState extends State<CircularMenuApp> {
       Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const CircleAvatar(radius: 12, backgroundImage: NetworkImage('https://via.placeholder.com/150')),
+          const CircleAvatar(radius: 12, backgroundImage: NetworkImage('https://images.freeimages.com/images/large-previews/25d/eagle-1523807.jpg')),
           const SizedBox(width: 8.0),
           Text(homePageData.postDetails!.postAuthorName),
         ],
@@ -324,12 +120,14 @@ class _CircularMenuState extends State<CircularMenuApp> {
         style: const TextStyle(color: Colors.grey, fontSize: 10),
       ),
       const SizedBox(height: 8.0),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          const VerticalDivider(color: Colors.grey, thickness: 2.5, width: 5.0),
-          Expanded(child: _singleItemWithoutComments(homePageData.postDetails!)),
-        ],
+      IntrinsicHeight(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const VerticalDivider(color: Colors.grey, thickness: 3, width: 8.0,indent: 10,endIndent: 10,),
+            Expanded(child: _singleItemWithoutComments(homePageData.postDetails!)),
+          ],
+        ),
       ),
     ]);
   }
@@ -339,23 +137,61 @@ class _CircularMenuState extends State<CircularMenuApp> {
       Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const CircleAvatar(radius: 12, backgroundImage: NetworkImage('https://via.placeholder.com/150')),
+          const CircleAvatar(radius: 12, backgroundImage: NetworkImage('https://images.freeimages.com/images/large-previews/443/horse-1393073.jpg')),
           const SizedBox(width: 8.0),
           Text(postDetails.postAuthorName),
         ],
       ),
+      const SizedBox(height: 8.0),
       Container(
-        height: 250,
-        width: 80,
-        color: Colors.red,
-      ),
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20.0),
+              boxShadow: [BoxShadow(offset: const Offset(0, 2), blurRadius: 3, color: Colors.black.withOpacity(0.23))]),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              ClipRRect(
+                borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+                child: Image.network(
+                  'https://images.freeimages.com/images/large-previews/5c6/sunset-jungle-1383333.jpg',
+                  width: 200,
+                  height: 100,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(postDetails.postDescription, maxLines: 2, overflow: TextOverflow.ellipsis),
+                    const SizedBox(height: 8.0),
+                    Text(postDetails.postedBefore, style: const TextStyle(color: Colors.grey, fontSize: 10)),
+                    const SizedBox(height: 16.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        const Icon(Icons.share_rounded, color: Colors.grey, size: 16),
+                        Text('${postDetails.shareCount}', style: const TextStyle(fontSize: 12, color: Colors.grey)),
+                        const Icon(Icons.messenger_outline_sharp, color: Colors.grey, size: 16),
+                        Text('${postDetails.commentsCount}', style: const TextStyle(fontSize: 12, color: Colors.grey)),
+                        const Icon(Icons.favorite_border, color: Colors.grey, size: 16),
+                        Text('${postDetails.likesCount}', style: const TextStyle(fontSize: 12, color: Colors.grey))
+                      ],
+                    ),
+                  ],
+                ),
+              )
+            ],
+          )),
     ]);
   }
 
   Widget _baseContainer(List<Widget> children) {
     return Container(
       padding: const EdgeInsets.all(8.0),
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(16.0)),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: children),
     );
   }
