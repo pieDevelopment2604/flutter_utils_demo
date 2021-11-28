@@ -26,11 +26,9 @@ class _DashboardPageState extends State<DashboardPage> {
   @override
   void initState() {
     super.initState();
-    print("The data is now changed ===> ${dataResponseModel.data!.length}");
     Future.delayed(const Duration(seconds: 20), () {
       setState(() {
         dataResponseModel = dataResponseModelFromJson(json.encode(Utils.HomePageData));
-        print("The data is now changed ===> ${dataResponseModel.data!.length}");
         isLoading = false;
       });
     });
