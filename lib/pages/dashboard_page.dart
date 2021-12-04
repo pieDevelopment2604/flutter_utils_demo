@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:greenlync/models/data_response_model.dart';
-import 'package:greenlync/utils/comman_shimmer_layouts.dart';
-import 'package:greenlync/utils/utils.dart';
+import 'package:flutterutilsdemo/models/data_response_model.dart';
+import 'package:flutterutilsdemo/utils/comman_shimmer_layouts.dart';
+import 'package:flutterutilsdemo/utils/utils.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);
