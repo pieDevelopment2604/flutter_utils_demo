@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.flutter_demo_utils.flutter_demo_utils">
+    package="com.flutter_demo_utils">
    <application
         android:label="flutter_demo_utils"
         android:icon="@mipmap/ic_launcher">

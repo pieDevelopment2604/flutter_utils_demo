@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_demo_utils/widget/circular_menu_widget.dart';
+import 'package:flutterutilsdemo/pages/dashboard_page.dart';
+import 'package:flutterutilsdemo/widget/circular_menu_widget.dart';
 
 void main() {
   runApp(const CircularMenuApp());
@@ -22,6 +23,14 @@ class _CircularMenuState extends State<CircularMenuApp> {
   /// By default, 0 value is selected.
   int _selectedIndex = 0;
 
+  /// Widget which gives the ui for the current selected screen, this ui will be changed on the
+  /// base of the selected index by the user.
+  /// By default, an empty screen goes pass it (for null safety).
+  /// Then, will be changed to 0 index by default.
+  /// In the index with the circular menu, old widget screen will be passed, in order
+  /// to make circular widget working perfectly.
+  Widget currentScreen = SizedBox();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -29,15 +38,31 @@ class _CircularMenuState extends State<CircularMenuApp> {
       home: Scaffold(
         body: Stack(
           children: [
-            Center(
-              child: Text('Index $_selectedIndex'),
-            ),
+            _currentUiWidget(),
             _circularMenuWidget(),
           ],
         ),
         bottomNavigationBar: _bottomNavigationMenu(),
       ),
     );
+  }
+
+  /// Widget function which gives the ui for the selected index widget.
+  /// Please refer to the notes above with the [currentScreen] widget variable.
+  Widget _currentUiWidget() {
+    switch (_selectedIndex) {
+      case 0:
+        currentScreen = DashboardPage();
+        break;
+      case 1:
+        currentScreen = Center(child: Text('Index $_selectedIndex'));
+        break;
+      case 2:
+        currentScreen = Center(child: Text('Index $_selectedIndex'));
+        break;
+    }
+
+    return currentScreen;
   }
 
   /// Widget function which gives the ui for circular menu
@@ -83,7 +108,7 @@ class _CircularMenuState extends State<CircularMenuApp> {
   }
 
   /// Widget function which gives the ui for the bottom navigation item.
-  Widget _bottomNavigationMenu(){
+  Widget _bottomNavigationMenu() {
     return BottomNavigationBar(
       unselectedItemColor: Colors.black,
       items: <BottomNavigationBarItem>[
@@ -102,8 +127,8 @@ class _CircularMenuState extends State<CircularMenuApp> {
         BottomNavigationBarItem(
           icon: Icon(_selectedIndex == 3
               ? fabKey.currentState?.isOpen == true
-              ? Icons.close
-              : Icons.add
+                  ? Icons.close
+                  : Icons.add
               : Icons.add),
           label: 'More',
         ),
