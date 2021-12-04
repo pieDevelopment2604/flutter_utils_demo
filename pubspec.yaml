@@ -1,5 +1,5 @@
-name: greenlync
-description: A new Flutter project which demonstrate the demo for the functionalities of the greenlync application
+name: flutterutilsdemo
+description: A new Flutter project which demonstrate the demo for the functionality like circular menu from the bottom navigation and shimmer effect in a more simplified way
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
