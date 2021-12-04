@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.greenlync.greenlync">
+    package="com.flutter_demo_utils.flutter_demo_utils">
    <application
-        android:label="greenlync"
+        android:label="flutter_demo_utils"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:greenlync/widget/circular_menu_widget.dart';
+import 'package:flutter_demo_utils/widget/circular_menu_widget.dart';
 
 void main() {
   runApp(const CircularMenuApp());
